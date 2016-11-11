@@ -1326,7 +1326,8 @@ angular.module('ui.bootstrap.dateparser', [])
     }
 
     format = $locale.DATETIME_FORMATS[format] || format;
-    format = format.replace(SPECIAL_CHARACTERS_REGEXP, '\\$&');
+	// MC - don't replace special characters as we want to use regex in the format.
+    //format = format.replace(SPECIAL_CHARACTERS_REGEXP, '\\$&');
 
     if ($locale.id !== localeId) {
       this.init();
