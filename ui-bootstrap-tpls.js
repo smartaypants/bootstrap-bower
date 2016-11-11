@@ -2,7 +2,7 @@
  * angular-ui-bootstrap
  * http://angular-ui.github.io/bootstrap/
 
- * Version: 0.14.3 - 2015-10-23
+ * Version: 0.14.4 - 2016-11-11
  * License: MIT
  */
 angular.module("ui.bootstrap", ["ui.bootstrap.tpls", "ui.bootstrap.collapse","ui.bootstrap.accordion","ui.bootstrap.alert","ui.bootstrap.buttons","ui.bootstrap.carousel","ui.bootstrap.dateparser","ui.bootstrap.position","ui.bootstrap.datepicker","ui.bootstrap.dropdown","ui.bootstrap.stackedMap","ui.bootstrap.modal","ui.bootstrap.pagination","ui.bootstrap.tooltip","ui.bootstrap.popover","ui.bootstrap.progressbar","ui.bootstrap.rating","ui.bootstrap.tabs","ui.bootstrap.timepicker","ui.bootstrap.typeahead"]);
@@ -2105,7 +2105,7 @@ function(scope, element, attrs, $compile, $parse, $document, $rootScope, $positi
   var self = this;
   var cache = {},
     isHtml5DateInput = false;
-  var dateFormat, closeOnDateSelection, appendToBody, onOpenFocus,
+  var dateFormat, dateParserFormat, closeOnDateSelection, appendToBody, onOpenFocus,
     datepickerPopupTemplateUrl, datepickerTemplateUrl, popupEl, datepickerEl,
     ngModel, $popup;
 
@@ -2144,6 +2144,8 @@ function(scope, element, attrs, $compile, $parse, $document, $rootScope, $positi
     if (!dateFormat) {
       throw new Error('uibDatepickerPopup must have a date format specified.');
     }
+
+	dateParserFormat =  angular.isDefined(attrs.dateParserFormat) ? attrs.dateParserFormat : dateFormat;
 
     if (isHtml5DateInput && attrs.datepickerPopup) {
       throw new Error('HTML5 date input types do not support custom formats.');
@@ -2350,7 +2352,7 @@ function(scope, element, attrs, $compile, $parse, $document, $rootScope, $positi
     } else if (angular.isDate(viewValue) && !isNaN(viewValue)) {
       return viewValue;
     } else if (angular.isString(viewValue)) {
-      var date = dateParser.parse(viewValue, dateFormat, scope.date);
+      var date = dateParser.parse(viewValue, dateParserFormat, scope.date);
       if (isNaN(date)) {
         return undefined;
       } else {
